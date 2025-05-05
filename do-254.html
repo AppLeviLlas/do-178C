@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Development Assurance - DO-178C Guide</title>
+    <title>DO-254 - DO-178C Guide</title>
     <style>
         :root {
             --primary-color: #005f73;
@@ -124,10 +124,6 @@
         .logo span {
             display: inline-block;
             margin-left: 10px;
-        }
-        
-        .nav-icon {
-            font-size: 1.5rem;
         }
         
         .nav-links {
@@ -306,39 +302,6 @@
             margin-bottom: 0.8rem;
         }
         
-        /* Process section */
-        .process-section {
-            background-color: var(--light-color);
-            padding: 4rem 0;
-            margin: 4rem 0;
-        }
-        
-        .process-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-        
-        .process-image {
-            height: 400px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .process-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .process-text h2 {
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-        }
-        
         /* Footer */
         .footer {
             background-color: var(--dark-color);
@@ -421,13 +384,8 @@
         
         /* Responsive design */
         @media (max-width: 992px) {
-            .topic-intro, .process-content, .two-column {
+            .topic-intro, .two-column {
                 grid-template-columns: 1fr;
-            }
-            
-            .process-image {
-                height: 300px;
-                order: -1;
             }
             
             .footer-content {
@@ -493,8 +451,8 @@
         <div class="header-bg"></div>
         <div class="water-overlay"></div>
         <div class="header-content">
-            <h1>Development Assurance & DO-178C</h1>
-            <p>Ensuring Quality and Safety in Aviation Software</p>
+            <h1>DO-254</h1>
+            <p>Hardware Design Assurance for Airborne Electronic Hardware</p>
         </div>
     </header>
 
@@ -502,7 +460,7 @@
         <div class="container">
             <ul class="breadcrumb-list">
                 <li class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">Home</a></li>
-                <li class="breadcrumb-item"><span class="current-page">Development Assurance</span></li>
+                <li class="breadcrumb-item"><span class="current-page">DO-254</span></li>
             </ul>
         </div>
     </div>
@@ -511,116 +469,73 @@
         <div class="container">
             <section class="topic-intro">
                 <div class="intro-text">
-                    <h2>Understanding Development Assurance</h2>
-                    <p>Development Assurance is a systematic approach to ensuring that software products meet their intended requirements and function safely in their operational environment. In the context of DO-178C, development assurance encompasses the processes, activities, and evidence needed to demonstrate that aviation software complies with airworthiness requirements.</p>
-                    <p>DO-178C defines a comprehensive framework for development assurance, covering planning, development, verification, configuration management, quality assurance, and certification liaison processes. Each process contributes to building confidence that the software will perform its intended functions with a level of safety appropriate for its criticality.</p>
-                    <p>The rigor of development assurance activities is determined by the software's Design Assurance Level (DAL), which is based on the potential impact of software failures on aircraft safety. Higher DALs require more extensive verification and validation activities, more detailed documentation, and greater independence in the verification process.</p>
-                    <p>This page explores the key aspects of development assurance in aviation software certification, including the core processes defined in DO-178C and strategies for effective implementation.</p>
+                    <h2>Understanding DO-254</h2>
+                    <p>DO-254, "Design Assurance Guidance for Airborne Electronic Hardware," is the hardware counterpart to DO-178C. It provides guidance for the design of complex electronic hardware in airborne systems and equipment, ensuring that it performs its intended function with a level of confidence in safety that complies with airworthiness requirements.</p>
+                    <p>Published by RTCA, Inc., DO-254 establishes a framework for hardware development that parallels the software development lifecycle defined in DO-178C. This parallel structure facilitates integration between hardware and software components in modern avionics systems, where the boundaries between the two are increasingly blurred.</p>
+                    <p>Like DO-178C, DO-254 defines different design assurance levels based on the potential impact of hardware failures on aircraft safety. These levels determine the rigor of development and verification activities required for certification.</p>
+                    <p>This page explores the key aspects of DO-254, its relationship with DO-178C, and strategies for effective implementation in avionics hardware development projects.</p>
                 </div>
                 <div class="quick-facts">
                     <h3>Key Concepts</h3>
                     <div class="fact-item">
-                        <div class="fact-label">Core Processes:</div>
-                        <div class="fact-value">Planning, development, verification, CM, QA, certification liaison</div>
+                        <div class="fact-label">Published:</div>
+                        <div class="fact-value">April 2000 by RTCA, Inc.</div>
                     </div>
                     <div class="fact-item">
-                        <div class="fact-label">Objectives:</div>
-                        <div class="fact-value">71 objectives across all processes, varying by DAL</div>
+                        <div class="fact-label">Scope:</div>
+                        <div class="fact-value">Complex electronic hardware in airborne systems</div>
                     </div>
                     <div class="fact-item">
-                        <div class="fact-label">Independence:</div>
-                        <div class="fact-value">Separation between development and verification activities</div>
+                        <div class="fact-label">Hardware DALs:</div>
+                        <div class="fact-value">Five levels (A-E) based on failure condition severity</div>
                     </div>
                     <div class="fact-item">
-                        <div class="fact-label">Traceability:</div>
-                        <div class="fact-value">Bidirectional links between artifacts at all levels</div>
+                        <div class="fact-label">Key Processes:</div>
+                        <div class="fact-value">Planning, requirements, design, implementation, verification</div>
                     </div>
                     <div class="fact-item">
-                        <div class="fact-label">Evidence:</div>
-                        <div class="fact-value">Documentation demonstrating compliance with objectives</div>
+                        <div class="fact-label">Companion to:</div>
+                        <div class="fact-value">DO-178C for software assurance</div>
                     </div>
                 </div>
             </section>
 
             <section class="two-column">
                 <div class="info-box">
-                    <h3>DO-178C Core Processes</h3>
+                    <h3>DO-254 Lifecycle Processes</h3>
                     <ul>
-                        <li><strong>Software Planning Process:</strong> Defines activities, responsibilities, and standards for software development.</li>
-                        <li><strong>Software Development Process:</strong> Includes requirements, design, coding, and integration activities.</li>
-                        <li><strong>Software Verification Process:</strong> Reviews, analyses, and tests to ensure requirements are met.</li>
-                        <li><strong>Software Configuration Management:</strong> Maintains integrity of software items throughout lifecycle.</li>
-                        <li><strong>Software Quality Assurance:</strong> Ensures processes are followed and standards are met.</li>
+                        <li><strong>Hardware Planning Process:</strong> Defines activities, responsibilities, and standards for hardware development.</li>
+                        <li><strong>Hardware Design Process:</strong> Transforms requirements into hardware architecture and detailed design.</li>
+                        <li><strong>Hardware Validation Process:</strong> Ensures requirements are correct and complete.</li>
+                        <li><strong>Hardware Verification Process:</strong> Confirms implementation meets requirements.</li>
+                        <li><strong>Hardware Configuration Management:</strong> Maintains integrity of hardware items throughout lifecycle.</li>
+                        <li><strong>Hardware Process Assurance:</strong> Ensures processes are followed and standards are met.</li>
                         <li><strong>Certification Liaison Process:</strong> Facilitates communication with certification authorities.</li>
                     </ul>
                 </div>
                 <div class="info-box">
-                    <h3>Design Assurance Levels</h3>
-                    <p>DO-178C defines five software Design Assurance Levels (DALs) that determine the rigor of development assurance activities:</p>
+                    <h3>Hardware Design Assurance Levels</h3>
+                    <p>DO-254 defines five hardware Design Assurance Levels (DALs) based on the contribution of hardware to potential failure conditions:</p>
                     <div class="fact-item">
                         <div class="fact-label">Level A:</div>
-                        <div class="fact-value">66 objectives (31 with independence)</div>
+                        <div class="fact-value">Catastrophic - Failure may cause multiple fatalities</div>
                     </div>
                     <div class="fact-item">
                         <div class="fact-label">Level B:</div>
-                        <div class="fact-value">65 objectives (19 with independence)</div>
+                        <div class="fact-value">Hazardous - Failure has large negative impact on safety</div>
                     </div>
                     <div class="fact-item">
                         <div class="fact-label">Level C:</div>
-                        <div class="fact-value">57 objectives (5 with independence)</div>
+                        <div class="fact-value">Major - Failure significantly reduces safety margins</div>
                     </div>
                     <div class="fact-item">
                         <div class="fact-label">Level D:</div>
-                        <div class="fact-value">28 objectives (2 with independence)</div>
+                        <div class="fact-value">Minor - Failure slightly reduces safety margins</div>
                     </div>
                     <div class="fact-item">
                         <div class="fact-label">Level E:</div>
-                        <div class="fact-value">No objectives required</div>
+                        <div class="fact-value">No Effect - Failure has no impact on safety</div>
                     </div>
-                </div>
-            </section>
-
-            <section class="process-section">
-                <div class="container">
-                    <div class="process-content">
-                        <div class="process-text">
-                            <h2>Verification Activities</h2>
-                            <p>Verification is a critical aspect of development assurance, providing evidence that the software meets its requirements and functions correctly. DO-178C defines several types of verification activities:</p>
-                            <p><strong>Reviews and Analyses:</strong> Systematic evaluations of software artifacts to detect errors and ensure compliance with standards. These include requirements reviews, design reviews, code reviews, traceability analyses, and coverage analyses.</p>
-                            <p><strong>Testing:</strong> Execution of the software to demonstrate that it behaves as specified. This includes requirements-based testing, robustness testing, and integration testing. Test cases must be traceable to requirements and must demonstrate that the software meets its intended functionality.</p>
-                            <p><strong>Independence:</strong> For higher DALs, many verification activities must be performed with independence, meaning they are conducted by someone other than the developer of the artifact being verified. This provides an additional layer of assurance by bringing a fresh perspective to the verification process.</p>
-                        </div>
-                        <div class="process-image">
-                            <img src="/api/placeholder/600/400" alt="Verification Process Diagram">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="two-column">
-                <div class="info-box">
-                    <h3>Configuration Management</h3>
-                    <ul>
-                        <li><strong>Configuration Identification:</strong> Uniquely identifying software items and their versions.</li>
-                        <li><strong>Baselines:</strong> Establishing reference points for controlled evolution.</li>
-                        <li><strong>Change Control:</strong> Managing changes to software items after baseline.</li>
-                        <li><strong>Status Accounting:</strong> Tracking the status of software items and changes.</li>
-                        <li><strong>Archive and Retrieval:</strong> Storing and retrieving configuration items.</li>
-                        <li><strong>Release Management:</strong> Controlling the release of software versions.</li>
-                        <li><strong>Environment Control:</strong> Managing development and verification tools.</li>
-                    </ul>
-                </div>
-                <div class="info-box">
-                    <h3>Quality Assurance</h3>
-                    <ul>
-                        <li><strong>Process Assurance:</strong> Ensuring adherence to defined processes.</li>
-                        <li><strong>Product Assurance:</strong> Evaluating software artifacts for quality attributes.</li>
-                        <li><strong>Independence:</strong> QA activities performed by personnel not responsible for development.</li>
-                        <li><strong>Problem Reporting:</strong> Documenting and tracking issues and their resolution.</li>
-                        <li><strong>Process Improvement:</strong> Identifying and implementing process enhancements.</li>
-                        <li><strong>Audits:</strong> Formal evaluations of processes and products.</li>
-                        <li><strong>Supplier Management:</strong> Overseeing quality of externally developed components.</li>
-                    </ul>
                 </div>
             </section>
         </div>

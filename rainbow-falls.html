@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainbow Falls (Waianiwaniwa) - Kerikeri Waterfalls</title>
+    <style>
+        :root {
+            --primary-color: #005f73;
+            --secondary-color: #0a9396;
+            --accent-color: #94d2bd;
+            --light-color: #e9f5db;
+            --dark-color: #001219;
+            --text-color: #333333;
+            --background-color: #fdfcf9;
+            --highlight-color: #ee9b00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Palatino', 'Palatino Linotype', serif;
+            font-weight: normal;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Header */
+        .header {
+            position: relative;
+            height: 70vh;
+            min-height: 450px;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 18, 25, 0.4), rgba(0, 18, 25, 0.6)), 
+                url('/api/placeholder/1600/900') no-repeat center center/cover;
+            z-index: -1;
+        }
+        
+        .water-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0), rgba(0, 95, 115, 0.6));
+            z-index: -1;
+        }
+        
+        .header-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+        }
+        
+        .header-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: var(--dark-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        .nav-icon {
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: white;
+            background: none;
+            border: none;
+        }
+        
+        /* Main content */
+        .main-content {
+            padding: 4rem 0;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Section styles */
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            bottom: -10px;
+            left: 20%;
+            background-color: var(--highlight-color);
+        }
+        
+        .breadcrumb {
+            background-color: var(--light-color);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .breadcrumb-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+        
+        .breadcrumb-item:not(:last-child)::after {
+            content: '/';
+            margin-left: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .breadcrumb-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb-link:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .current-page {
+            color: var(--text-color);
+        }
+        
+        /* Waterfall content */
+        .waterfall-intro {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .intro-text h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quick-facts {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quick-facts h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        
+        .fact-item {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 1rem;
+        }
+        
+        .fact-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .fact-label {
+            font-weight: bold;
+            color: var(--secondary-color);
+            width: 40%;
+        }
+        
+        .fact-value {
+            width: 60%;
+        }
+        
+        .gallery-section {
+            margin: 4rem 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 4rem 0;
+        }
+        
+        .info-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .info-box ul {
+            padding-left: 1.5rem;
+        }
+        
+        .info-box ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .map-container {
+            width: 100%;
+            height: 450px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 3rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .history-section {
+            background-color: var(--light-color);
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+        
+        .history-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .history-image {
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .history-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .history-text h2 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Accommodation section */
+        .accommodation {
+            background-color: white;
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 4rem 0;
+            text-align: center;
+        }
+        
+        .accommodation h2 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .accommodation p {
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--highlight-color);
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #ca8500;
+            transform: translateY(-3px);
+        }
+        
+        .nearby-section h2 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .nearby-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .nearby-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .nearby-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .nearby-image {
+            height: 150px;
+            overflow: hidden;
+        }
+        
+        .nearby-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .nearby-item:hover .nearby-image img {
+            transform: scale(1.1);
+        }
+        
+        .nearby-content {
+            padding: 1.5rem;
+        }
+        
+        .nearby-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease, background-color 0.3s ease;
+            z-index: 999;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-description {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .waterfall-intro, .history-content, .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .history-image {
+                height: 300px;
+                order: -1;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background-color: var(--dark-color);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s ease;
+                z-index: 1001;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+                z-index: 1002;
+            }
+            
+            .gallery-grid, .nearby-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="logo">
+            <span>Kerikeri Waterfalls</span>
+        </a>
+        <button class="mobile-toggle" id="mobileToggle">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rainbow-falls.html">Rainbow Falls</a></li>
+            <li><a href="wharepuke-falls.html">Wharepuke Falls</a></li>
+            <li><a href="charlies-rock.html">Charlie's Rock</a></li>
+            <li><a href="fairy-pools.html">Fairy Pools</a></li>
+            <li><a href="te-wairere-falls.html">Te Wairere Falls</a></li>
+        </ul>
+    </nav>
+
+    <header class="header">
+        <div class="header-bg"></div>
+        <div class="water-overlay"></div>
+        <div class="header-content">
+            <h1>Rainbow Falls (Waianiwaniwa)</h1>
+            <p>Kerikeri's Most Iconic Waterfall</p>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">Home</a></li>
+                <li class="breadcrumb-item"><span class="current-page">Rainbow Falls</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="waterfall-intro">
+                <div class="intro-text reveal">
+                    <h2>Magnificent Rainbow Falls</h2>
+                    <p>Rainbow Falls (Waianiwaniwa in Māori) is undoubtedly Kerikeri's most famous and spectacular waterfall. Standing at an impressive 27 meters high, this magnificent single-drop waterfall creates a perfect curtain of water that plunges into a large swimming pool below.</p>
+                    <p>The waterfall derives its name from the stunning rainbows that form in its mist on sunny days, creating a magical atmosphere that has captivated visitors for generations. Part of the Kerikeri River, Rainbow Falls is not only a natural wonder but also a site of cultural significance to the local Māori people.</p>
+                    <p>Located just a short drive from Kerikeri town center, Rainbow Falls is easily accessible and offers various viewing platforms that provide different perspectives of this breathtaking natural feature.</p>
+                    <p>The thundering sound of water, the refreshing mist in the air, and the lush surrounding bush combine to create an immersive experience that connects visitors with the raw power and beauty of nature.</p>
+                </div>
+                <div class="quick-facts reveal">
+                    <h3>Quick Facts</h3>
+                    <div class="fact-item">
+                        <div class="fact-label">Height:</div>
+                        <div class="fact-value">27 meters (89 feet)</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Type:</div>
+                        <div class="fact-value">Plunge waterfall</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">River:</div>
+                        <div class="fact-value">Kerikeri River</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Swimming:</div>
+                        <div class="fact-value">Possible at the base (caution advised)</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Walking Time:</div>
+                        <div class="fact-value">10 minutes from car park</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Difficulty:</div>
+                        <div class="fact-value">Easy - Well-maintained paths</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Best Time:</div>
+                        <div class="fact-value">Morning for rainbows, after rainfall for volume</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="gallery-section reveal">
+                <div class="section-header">
+                    <h2 class="section-title">Gallery</h2>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/600/400" alt="Rainbow Falls wide view">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/600/400" alt="Rainbow Falls with rainbow">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/600/400" alt="Rainbow Falls walking track">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/600/400" alt="Swimming at Rainbow Falls">
+                    </div>
+                </div>
+            </section>
+
+            <section class="two-column">
+                <div class="info-box reveal">
+                    <h3>Visitor Tips</h3>
+                    <ul>
+                        <li>Visit early morning or late afternoon to avoid crowds and get the best lighting for photos.</li>
+                        <li>The path to the falls is well-maintained and suitable for most fitness levels.</li>
+                        <li>For the best rainbow effect, visit on a sunny day between 10am and 2pm.</li>
+                        <li>Bring insect repellent during summer months.</li>
+                        <li>The lower viewing platform offers the best full view of the falls.</li>
+                        <li>Swimming is possible in the pool below, but be cautious of strong currents, especially after heavy rain.</li>
+                        <li>Combine your visit with the nearby Stone Store Basin for a perfect half-day excursion.</li>
+                        <li>In summer, bring water and sun protection as the viewing areas can get hot.</li>
+                        <li>Allow at least an hour to fully explore all viewing points and enjoy the surroundings.</li>
+                    </ul>
+                </div>
+                <div class="info-box reveal">
+                    <h3>Walking Tracks</h3>
+                    <p>Rainbow Falls is accessible via several walking tracks:</p>
+                    <div class="fact-item">
+                        <div class="fact-label">Rainbow Falls Track:</div>
+                        <div class="fact-value">The most direct route from the car park, approximately 10 minutes walking time.</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Kerikeri River Track:</div>
+                        <div class="fact-value">A longer option that starts from the Stone Store Basin and follows the Kerikeri River to the falls (approximately 1 hour one way).</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Rainbow Falls Loop:</div>
+                        <div class="fact-value">A circular track that provides views from multiple vantage points (approximately 30 minutes).</div>
+                    </div>
+                    <p>All tracks are well-maintained and offer different perspectives of the falls and surrounding landscapes. Information boards along the routes provide insights into the local flora, fauna, and history.</p>
+                </div>
+            </section>
+
+            <section class="map-container reveal">
+                <!-- Map placeholder -->
+                <img src="/api/placeholder/1200/450" alt="Map to Rainbow Falls" style="width:100%; height:100%; object-fit:cover;">
+            </section>
+
+            <section class="history-section">
+                <div class="container">
+                    <div class="history-content">
+                        <div class="history-text reveal">
+                            <h2>History & Cultural Significance</h2>
+                            <p>Rainbow Falls has significant cultural importance to the local Ngāpuhi iwi (tribe). According to Māori tradition, the pool at the base of the falls was used for ceremonial purposes and was considered a sacred site.</p>
+                            <p>The Māori name for the falls, "Waianiwaniwa," translates to "Waters of the Rainbow," highlighting the significance of the natural rainbow phenomenon that occurs in the mist created by the cascading water.</p>
+                            <p>The area around the falls has witnessed important historical events, including early interactions between Māori and European settlers. The nearby Kororipo Pā (fortified village) and the historic Stone Store are testament to this rich cultural heritage.</p>
+                            <p>Today, the falls are protected as part of a scenic reserve managed by the Department of Conservation, ensuring this natural treasure is preserved for future generations.</p>
+                        </div>
+                        <div class="history-image reveal">
+                            <img src="/api/placeholder/600/400" alt="Historic image of Rainbow Falls">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="accommodation reveal">
+                <h2>Stay at Keri Gold Chalets</h2>
+                <p>Make Rainbow Falls part of your Kerikeri adventure by staying at the nearby Keri Gold Chalets. Our comfortable accommodations are just a short drive from Rainbow Falls and other local attractions.</p>
+                <p>After a day of exploring, relax in our peaceful chalets surrounded by native bush and birdsong. With modern amenities and a tranquil setting, Keri Gold Chalets offers the perfect base for your Northland adventure.</p>
+                <a href="https://kerigoldchalets.co.nz" class="cta-button">Book Your Stay</a>
+            </section>
+
+            <section class="nearby-section reveal">
+                <h2>Other Nearby Attractions</h2>
+                <p>While visiting Rainbow Falls, consider exploring these nearby attractions:</p>
+                <div class="nearby-grid">
+                    <div class="nearby-item">
+                        <div class="nearby-image">
+                            <img src="/api/placeholder/400/300" alt="Wharepuke Falls">
+                        </div>
+                        <div class="nearby-content">
+                            <h3 class="nearby-title">Wharepuke Falls</h3>
+                            <p>Another beautiful waterfall just a short drive away.</p>
+                        </div>
+                    </div>
+                    <div class="nearby-item">
+                        <div class="nearby-image">
+                            <img src="/api/placeholder/400/300" alt="Kerikeri Farmers Market">
+                        </div>
+                        <div class="nearby-content">
+                            <h3 class="nearby-title">Kerikeri Farmers Market</h3>
+                            <p>If visiting on a Sunday morning, don't miss the vibrant local market.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">Kerikeri Waterfalls</div>
+                    <p class="footer-description">A private blog exploring the natural beauty of Kerikeri's waterfalls and providing information for visitors to the region.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-heading">Waterfalls</h3>
+                    <ul class="footer-links">
+                        <li><a href="rainbow-falls.html">Rainbow Falls</a></li>
+                        <li><a href="wharepuke-falls.html">Wharepuke Falls</a></li>
+                        <li><a href="charlies-rock.html">Charlie's Rock</a></li>
+                        <li><a href="fairy-pools.html">Fairy Pools</a></li>
+                        <li><a href="te-wairere-falls.html">Te Wairere Falls</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-heading">Useful Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://kerigoldchalets.co.nz">Keri Gold Chalets</a></li>
+                        <li><a href="https://kerigoldchalets.co.nz/contact">Contact Us</a></li>
+                        <li><a href="#">About This Blog</a></li>
+                        <li><a href="#">Kerikeri Area Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Kerikeri Waterfalls Guide - A private blog by <a href="https://kerigoldchalets.co.nz">Keri Gold Chalets</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            mobileToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Scroll reveal animation
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        
+        // Gallery image modal (placeholder for future functionality)
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Future enhancement: Add lightbox functionality
+                console.log('Gallery item clicked');
+            });
+        });
+    </script>
+</body>
+</html>">
+                            <img src="/api/placeholder/400/300" alt="Stone Store & Kemp House">
+                        </div>
+                        <div class="nearby-content">
+                            <h3 class="nearby-title">The Stone Store & Kemp House</h3>
+                            <p>New Zealand's oldest stone building and oldest surviving European building.</p>
+                        </div>
+                    </div>
+                    <div class="nearby-item">
+                        <div class="nearby-image">
+                            <img src="/api/placeholder/400/300" alt="Kororipo Pā">
+                        </div>
+                        <div class="nearby-content">
+                            <h3 class="nearby-title">Kororipo Pā</h3>
+                            <p>Historic Māori fortified settlement with stunning views.</p>
+                        </div>
+                    </div>
+                    <div class="nearby-item">
+                        <div class="nearby-image">
+                            <img src="/api/placeholder/400/300" alt="Kerikeri Basin">
+                        </div>
+                        <div class="nearby-content">
+                            <h3 class="nearby-title">Kerikeri Basin</h3>
+                            <p>Beautiful riverside walks and historic sites.</p>
+                        </div>
+                    </div>
+                    <div class="nearby-item">
+                        <div class="nearby-image

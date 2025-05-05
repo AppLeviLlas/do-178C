@@ -3,36 +3,614 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requirements</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Requirements - DO-178C Guide</title>
+    <style>
+        :root {
+            --primary-color: #005f73;
+            --secondary-color: #0a9396;
+            --accent-color: #94d2bd;
+            --light-color: #e9f5db;
+            --dark-color: #001219;
+            --text-color: #333333;
+            --background-color: #fdfcf9;
+            --highlight-color: #ee9b00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Palatino', 'Palatino Linotype', serif;
+            font-weight: normal;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Header */
+        .header {
+            position: relative;
+            height: 70vh;
+            min-height: 450px;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 18, 25, 0.4), rgba(0, 18, 25, 0.6)), 
+                url('/api/placeholder/1600/900') no-repeat center center/cover;
+            z-index: -1;
+        }
+        
+        .water-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0), rgba(0, 95, 115, 0.6));
+            z-index: -1;
+        }
+        
+        .header-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+        }
+        
+        .header-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: var(--dark-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: white;
+            background: none;
+            border: none;
+        }
+        
+        /* Main content */
+        .main-content {
+            padding: 4rem 0;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: var(--light-color);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .breadcrumb-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+        
+        .breadcrumb-item:not(:last-child)::after {
+            content: '/';
+            margin-left: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .breadcrumb-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb-link:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .current-page {
+            color: var(--text-color);
+        }
+        
+        /* Topic content */
+        .topic-intro {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .intro-text h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quick-facts {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quick-facts h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        
+        .fact-item {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 1rem;
+        }
+        
+        .fact-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .fact-label {
+            font-weight: bold;
+            color: var(--secondary-color);
+            width: 40%;
+        }
+        
+        .fact-value {
+            width: 60%;
+        }
+        
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 4rem 0;
+        }
+        
+        .info-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .info-box ul {
+            padding-left: 1.5rem;
+        }
+        
+        .info-box ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-description {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .topic-intro, .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background-color: var(--dark-color);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s ease;
+                z-index: 1001;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+                z-index: 1002;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>DO-178C Blog</h1>
-        <nav>
-            <a href="index-do178c.html">Home</a> |
-            <a href="do178c.html">DO-178C</a> |
-            <a href="development-assurance.html">Development Assurance</a> |
-            <a href="system-safety.html">System Safety</a> |
-            <a href="requirements.html">Requirements</a> |
-            <a href="do254.html">DO-254</a>
-        </nav>
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="logo">
+            <span>DO-178C Guide</span>
+        </a>
+        <button class="mobile-toggle" id="mobileToggle">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="system-safety.html">System Safety</a></li>
+            <li><a href="do-254.html">DO-254</a></li>
+            <li><a href="requirements.html">Requirements</a></li>
+            <li><a href="development-assurance.html">Development Assurance</a></li>
+        </ul>
+    </nav>
+
+    <header class="header">
+        <div class="header-bg"></div>
+        <div class="water-overlay"></div>
+        <div class="header-content">
+            <h1>Requirements</h1>
+            <p>The Foundation of Aviation Software Development</p>
+        </div>
     </header>
-    <main>
-        <section id="requirements">
-            <h2>Requirements</h2>
-            <p>Requirements are a fundamental aspect of DO-178C. They define what the software is intended to do and provide the basis for verification and validation activities.</p>
-            <p>DO-178C distinguishes between different types of requirements, including:</p>
-            <ul>
-                <li>High-level requirements: These requirements describe the overall functionality of the system.</li>
-                <li>Low-level requirements: These requirements describe the detailed design and implementation of the software.</li>
-                <li>Safety requirements: These requirements address potential hazards and ensure the safety of the system.</li>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">Home</a></li>
+                <li class="breadcrumb-item"><span class="current-page">Requirements</span></li>
             </ul>
-            <p>It is essential to write clear, concise, and verifiable requirements. Requirements should be unambiguous and should be testable to ensure that they have been met.</p>
-        </section>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="topic-intro">
+                <div class="intro-text">
+                    <h2>Understanding Requirements in DO-178C</h2>
+                    <p>Requirements are the cornerstone of aviation software development under DO-178C. They define what the software must do, how it must perform, and under what conditions it must operate. Well-defined, clear, and traceable requirements are essential for developing safe and compliant aviation software.</p>
+                    <p>DO-178C places significant emphasis on requirements development, management, and verification. The standard defines different levels of requirements, from high-level requirements that capture system functionality to low-level requirements that guide implementation details.</p>
+                    <p>The requirements process is not just about documentation—it's about establishing a solid foundation for the entire development lifecycle. Requirements drive design decisions, implementation strategies, and verification activities. They also serve as the basis for demonstrating compliance with certification objectives.</p>
+                    <p>This page explores the key aspects of requirements in aviation software certification, including best practices for development, management, and verification under DO-178C.</p>
+                </div>
+                <div class="quick-facts">
+                    <h3>Key Concepts</h3>
+                    <div class="fact-item">
+                        <div class="fact-label">High-Level Requirements:</div>
+                        <div class="fact-value">Derived from system requirements, define software functions</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Low-Level Requirements:</div>
+                        <div class="fact-value">Detailed software requirements derived from high-level requirements</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Derived Requirements:</div>
+                        <div class="fact-value">Requirements not directly traceable to higher-level requirements</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Traceability:</div>
+                        <div class="fact-value">Mapping between requirements at different levels</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-label">Verification:</div>
+                        <div class="fact-value">Reviews, analyses, and tests to ensure requirements are met</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="two-column">
+                <div class="info-box">
+                    <h3>Requirements Development</h3>
+                    <ul>
+                        <li><strong>Completeness:</strong> Requirements must cover all intended functions and safety aspects.</li>
+                        <li><strong>Correctness:</strong> Requirements must accurately reflect the intended behavior.</li>
+                        <li><strong>Consistency:</strong> Requirements must not contradict each other.</li>
+                        <li><strong>Verifiability:</strong> Requirements must be stated in a way that allows verification.</li>
+                        <li><strong>Unambiguity:</strong> Requirements must have only one interpretation.</li>
+                        <li><strong>Modifiability:</strong> Requirements structure must facilitate changes.</li>
+                        <li><strong>Traceability:</strong> Requirements must be traceable to higher-level requirements.</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h3>Requirements Verification</h3>
+                    <ul>
+                        <li><strong>Reviews:</strong> Systematic examination of requirements for quality attributes.</li>
+                        <li><strong>Traceability Analysis:</strong> Ensuring all requirements are traced to higher-level requirements.</li>
+                        <li><strong>Algorithm Analysis:</strong> Evaluating the correctness of algorithms specified in requirements.</li>
+                        <li><strong>Requirements-Based Testing:</strong> Testing designed to verify implementation meets requirements.</li>
+                        <li><strong>Independence:</strong> Verification activities performed by someone other than the author.</li>
+                        <li><strong>Coverage Analysis:</strong> Ensuring all requirements are verified by tests.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="two-column">
+                <div class="info-box">
+                    <h3>Common Requirements Challenges</h3>
+                    <ul>
+                        <li><strong>Ambiguity:</strong> Requirements that can be interpreted in multiple ways.</li>
+                        <li><strong>Incompleteness:</strong> Missing requirements or aspects of functionality.</li>
+                        <li><strong>Inconsistency:</strong> Conflicting requirements within the specification.</li>
+                        <li><strong>Unverifiability:</strong> Requirements that cannot be objectively verified.</li>
+                        <li><strong>Scope Creep:</strong> Uncontrolled growth in requirements during development.</li>
+                        <li><strong>Traceability Gaps:</strong> Requirements not properly traced to higher levels.</li>
+                        <li><strong>Derived Requirements:</strong> Managing requirements not traceable to higher levels.</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h3>Best Practices</h3>
+                    <ul>
+                        <li><strong>Use Formal Methods:</strong> Consider formal specification languages for critical requirements.</li>
+                        <li><strong>Implement Requirements Management Tools:</strong> Use tools to manage traceability and changes.</li>
+                        <li><strong>Establish Review Processes:</strong> Conduct regular reviews with diverse stakeholders.</li>
+                        <li><strong>Define Clear Attributes:</strong> Establish attributes for requirements (safety-critical, derived, etc.).</li>
+                        <li><strong>Document Rationale:</strong> Capture the reasoning behind requirements decisions.</li>
+                        <li><strong>Maintain Change History:</strong> Track changes to requirements over time.</li>
+                        <li><strong>Validate with Stakeholders:</strong> Ensure requirements meet stakeholder needs.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
     </main>
-    <footer>
-        <p>&copy; 2025 DO-178C Blog</p>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">DO-178C Guide</div>
+                    <p class="footer-description">A comprehensive resource for understanding and implementing aviation certification standards.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">LI</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-heading">Topics</h3>
+                    <ul class="footer-links">
+                        <li><a href="system-safety.html">System Safety</a></li>
+                        <li><a href="do-254.html">DO-254</a></li>
+                        <li><a href="requirements.html">Requirements</a></li>
+                        <li><a href="development-assurance.html">Development Assurance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-heading">Useful Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About This Guide</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAA Resources</a></li>
+                        <li><a href="#">RTCA Documents</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 DO-178C Guide - A comprehensive resource for aviation software certification</p>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            mobileToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+    </script>
 </body>
 </html>
